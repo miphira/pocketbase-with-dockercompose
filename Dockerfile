@@ -2,7 +2,7 @@
 FROM alpine:latest
 
 # Khai báo phiên bản PocketBase muốn cài (Check github để lấy bản mới nhất)
-ARG PB_VERSION=0.22.21
+ARG PB_VERSION=0.35.1
 
 # Cài các gói cần thiết: unzip, ca-certificates (để gọi https)
 RUN apk add --no-cache \
