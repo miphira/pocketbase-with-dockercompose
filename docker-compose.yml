@@ -1,0 +1,19 @@
+services:
+  pocketbase:
+    build: .
+    container_name: pocketbase
+    restart: unless-stopped
+    ports:
+      # Map port 8090 của container ra 8090 của máy chủ
+      # Nếu dùng Nginx Proxy Manager hoặc Traefik thì có thể bỏ dòng này
+      - "8090:8090"
+    volumes:
+      # Quan trọng: Mount thư mục pb_data ra ngoài để không mất dữ liệu khi xóa container
+      - ./pb_data:/pb/pb_data
+      # (Tuỳ chọn) Mount thư mục public nếu bạn host web tĩnh ngay trong PocketBase
+      # - ./pb_public:/pb/pb_public
+    healthcheck:
+        test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8090/api/health"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
